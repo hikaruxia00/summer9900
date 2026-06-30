@@ -841,110 +841,42 @@
 </html>
 <script>
 (function() {
-  // ========== 1. 清除旧版本可能残留的错误缓存 ==========
-  try {
-    var oldKey = 'ai_progress_guide_edits';
-    var oldData = JSON.parse(localStorage.getItem(oldKey) || '{}');
-    // 如果旧数据使用的是 "bg_0" 格式的 key（旧版），清除重建
-    var keys = Object.keys(oldData);
-    if (keys.length > 0 && !keys[0].startsWith('ce_')) {
-      localStorage.removeItem(oldKey);
-    }
-    // 清除旧版独立板块的 collapse key
-    ['good','bad','check'].forEach(function(k) {
-      localStorage.removeItem('ai_progress_collapse_' + k);
-    });
-  } catch(e) {}
-
-  // ========== 2. 为每个可编辑元素分配稳定 ID ==========
-  const STORAGE_KEY = 'ai_progress_guide_edits';
-  const COLLAPSE_KEY = 'ai_progress_collapse';
-
-  function assignIds() {
-    let idx = 0;
-    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-      if (!el.getAttribute('data-cid')) {
-        el.setAttribute('data-cid', 'ce_' + (idx++));
-      }
-    });
-  }
-
-  // ========== 2. 保存编辑内容到 localStorage ==========
-  function saveEdits() {
-    const data = {};
-    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-      const cid = el.getAttribute('data-cid');
-      if (cid) data[cid] = el.innerHTML;
-    });
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
-  }
-
-  // ========== 3. 从 localStorage 恢复编辑内容 ==========
-  function restoreEdits() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      const data = JSON.parse(raw);
-      document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-        const cid = el.getAttribute('data-cid');
-        if (cid && data[cid] !== undefined) {
-          el.innerHTML = data[cid];
-        }
-      });
-    } catch(e) {}
-  }
-
-  // ========== 4. 监听编辑变化 ==========
-  assignIds();
-  restoreEdits();
+  // 禁用 localStorage 恢复，避免缓存导致页面结构混乱
+  try { localStorage.removeItem('ai_progress_guide_edits'); } catch(e) {}
 
   // 显示保存状态提示
   var saveToast = document.createElement('div');
   saveToast.id = 'save-toast';
   saveToast.textContent = '已自动保存';
+  saveToast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:#27AE60;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:999;box-shadow:0 2px 12px rgba(39,174,96,.3);';
   document.body.appendChild(saveToast);
 
   var saveTimer = null;
   function showSaveTip() {
-    saveToast.classList.add('show');
+    saveToast.style.opacity = '1';
+    saveToast.style.transform = 'translateX(-50%) translateY(0)';
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(function(){ saveToast.classList.remove('show'); }, 1500);
+    saveTimer = setTimeout(function(){ saveToast.style.opacity = '0'; }, 1500);
   }
 
   document.addEventListener('input', function(e) {
     if (e.target.getAttribute('contenteditable') === 'true') {
-      saveEdits();
       showSaveTip();
     }
   });
 
-  // ========== 5. 板块折叠/展开 ==========
-  function initCollapse() {
-    document.querySelectorAll('[data-toggle]').forEach(function(header) {
-      const section = header.closest('[data-section]');
-      const body = section ? section.querySelector('[data-body]') : null;
-      if (!body) return;
+  // 板块折叠/展开
+  document.querySelectorAll('[data-toggle]').forEach(function(header) {
+    var section = header.closest('[data-section]');
+    var body = section ? section.querySelector('[data-body]') : null;
+    if (!body) return;
 
-      const secKey = section.getAttribute('data-section');
-
-      // 恢复折叠状态
-      try {
-        const collapsed = localStorage.getItem(COLLAPSE_KEY + '_' + secKey) === 'true';
-        if (collapsed) {
-          header.classList.add('collapsed');
-          body.classList.add('collapsed');
-        }
-      } catch(e) {}
-
-      header.addEventListener('click', function(e) {
-        if (e.target.getAttribute('contenteditable') === 'true') return;
-        const isCollapsed = body.classList.contains('collapsed');
-        header.classList.toggle('collapsed', !isCollapsed);
-        body.classList.toggle('collapsed', !isCollapsed);
-        try { localStorage.setItem(COLLAPSE_KEY + '_' + secKey, !isCollapsed); } catch(e) {}
-      });
+    header.addEventListener('click', function(e) {
+      if (e.target.getAttribute('contenteditable') === 'true') return;
+      var isCollapsed = body.classList.contains('collapsed');
+      header.classList.toggle('collapsed', !isCollapsed);
+      body.classList.toggle('collapsed', !isCollapsed);
     });
-  }
-  initCollapse();
+  });
 })();
 </script>
