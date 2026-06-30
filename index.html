@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>AI进展评估指南 — 如何写出让捐赠人点赞的高分进展</title>
+<style>
+  :root {
+    --red: #E64A4A;
+    --red-light: #FFF5F5;
+    --red-dark: #C0392B;
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #EEEEEE;
+    --gray-300: #E0E0E0;
+    --gray-400: #BDBDBD;
+    --gray-600: #666;
+    --gray-800: #333;
+    --gray-900: #1a1a1a;
+    --green: #27AE60;
+    --green-light: #E8F8F0;
+    --orange: #E67E22;
+    --orange-light: #FFF3E6;
+    --blue: #2980B9;
+    --blue-light: #EBF5FB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    background: linear-gradient(135deg, var(--red) 0%, #D63031 100%);
+    color: #fff;
+    padding: 48px 0 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: rgba(255,255,255,.06);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,.04);
+    border-radius: 50%;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .header-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .header .subtitle {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: .85;
+  }
+
+  /* ===== Container ===== */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ===== Section ===== */
+  .section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin: 24px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    border: 1px solid var(--gray-200);
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--red-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .flower {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+  }
+  .section-title .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-left: 8px;
+  }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+
+  .section p {
+    margin-bottom: 14px;
+    color: var(--gray-800);
+  }
+  .section ul, .section ol {
+    margin: 10px 0 14px 24px;
+    color: var(--gray-800);
+  }
+  .section li {
+    margin-bottom: 8px;
+  }
+  .section li::marker {
+    color: var(--red);
+  }
+
+  /* ===== Principle Cards (并排竖向板块，同评估逻辑样式) ===== */
+  .principle-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 12px 0;
+  }
+  .principle-card {
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    background: var(--gray-50);
+  }
+  .principle-card .flower-icon {
+    width: 24px; height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  .principle-card .num {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-400);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .principle-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red-dark);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+  }
+  .principle-card p {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  /* ===== Cards ===== */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .card {
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    background: var(--gray-50);
+  }
+  .card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--red-dark);
+    margin-bottom: 10px;
+  }
+  .card p, .card li {
+    font-size: 13px;
+    color: var(--gray-600);
+  }
+  .card ul { margin-left: 16px; }
+
+  .card-good { border-left: 3px solid var(--green); }
+  .card-good h4 { color: var(--green); }
+  .card-bad { border-left: 3px solid var(--red); }
+  .card-bad h4 { color: var(--red); }
+
+  /* ===== Table ===== */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--red);
+    color: #fff;
+    font-weight: 600;
+    padding: 12px 14px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  thead th:not(:last-child) {
+    border-right: 1px solid rgba(255,255,255,.2);
+  }
+  tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--gray-100); }
+  .col-a { background: var(--green-light); }
+  .col-b { background: var(--orange-light); }
+  .col-c { background: var(--red-light); }
+
+  /* ===== Badge ===== */
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+  .badge-a { background: var(--green-light); color: var(--green); }
+  .badge-b { background: var(--orange-light); color: var(--orange); }
+  .badge-c { background: var(--red-light); color: var(--red); }
+
+  /* ===== Checklist ===== */
+  .checklist {
+    list-style: none !important;
+    margin-left: 0 !important;
+  }
+  .checklist li {
+    padding: 8px 0 8px 32px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 18px; height: 18px;
+    background: url('1_小红花符号_原型_透明底.png') center/contain no-repeat;
+  }
+
+  .badlist {
+    list-style: none !important;
+    margin-left: 0 !important;
+  }
+  .badlist li {
+    padding: 8px 0 8px 32px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .badlist li::before {
+    content: '✘';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 20px; height: 20px;
+    color: var(--red);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ===== Guide 合并模块 (纵向排列) ===== */
+  .guide-block {
+    margin-top: 16px;
+  }
+  .guide-block .guide-col {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+  .guide-block .guide-col:last-child { margin-bottom: 0; }
+  .guide-head {
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gray-300);
+  }
+  .guide-head .flower {
+    width: 20px; height: 20px;
+    margin-right: 4px;
+  }
+  .guide-head-green { color: var(--green); border-bottom-color: var(--green); }
+  .guide-head-red { color: var(--red); border-bottom-color: var(--red); }
+  .guide-head-blue { color: var(--blue); border-bottom-color: var(--blue); }
+
+  .self-check { display: flex; flex-direction: column; gap: 10px; }
+  .check-item { }
+  .check-q {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  .check-q::before { content: '❓ '; }
+  .check-a {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.6;
+    padding-left: 22px;
+  }
+
+  /* ===== Highlight box ===== */
+  .highlight {
+    padding: 18px 22px;
+    border-radius: 10px;
+    margin: 16px 0;
+  }
+  .highlight-green {
+    background: var(--green-light);
+    border-left: 4px solid var(--green);
+  }
+  .highlight-red {
+    background: var(--red-light);
+    border-left: 4px solid var(--red);
+  }
+  .highlight-blue {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+  }
+  .highlight h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .highlight-green h4 { color: var(--green); }
+  .highlight-red h4 { color: var(--red); }
+  .highlight-blue h4 { color: var(--blue); }
+  .highlight p { font-size: 13px; margin-bottom: 0 !important; }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--gray-400);
+    font-size: 12px;
+  }
+  .footer .flower-sm {
+    width: 20px; height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+  }
+
+  /* ===== Editable region ===== */
+  [contenteditable="true"] {
+    outline: none;
+    transition: background .15s;
+  }
+  [contenteditable="true"]:hover {
+    background: #FFFDF0;
+  }
+  [contenteditable="true"]:focus {
+    background: #FFF9E6;
+    box-shadow: 0 0 0 2px rgba(230,74,74,.15);
+    border-radius: 4px;
+  }
+  .edit-hint {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-400);
+    padding: 8px 0 0;
+    margin-top: 8px;
+    border-top: 1px dashed var(--gray-300);
+  }
+  .edit-hint::before {
+    content: '✎ 点击文字即可编辑 · ';
+  }
+
+  /* ===== Save Toast ===== */
+  #save-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--green);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity .3s, transform .3s;
+    pointer-events: none;
+    z-index: 999;
+    box-shadow: 0 2px 12px rgba(39,174,96,.3);
+  }
+  #save-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ===== Collapse ===== */
+  .section-header {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 28px;
+  }
+  .section-header::after {
+    content: '−';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--gray-400);
+    transition: transform .25s;
+  }
+  .section-header.collapsed::after {
+    content: '+';
+  }
+  .section-body {
+    overflow: hidden;
+    transition: max-height .35s ease, opacity .25s ease, padding .25s ease;
+    max-height: 20000px;
+    opacity: 1;
+    padding-top: 0;
+  }
+  .section-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+  }
+  .section-body.collapsed > * {
+    display: none;
+  }
+  .section-body > *:first-child {
+    margin-top: 20px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    .header { padding: 32px 0 28px; }
+    .header h1 { font-size: 20px; }
+    .section { padding: 24px 18px; }
+    .cards { grid-template-columns: 1fr; }
+    .principle-cards { grid-template-columns: 1fr; }
+    thead th, tbody td { padding: 8px 10px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="header-inner">
+    <img src="1_小红花符号_原型_透明底.png" alt="小红花" class="header-icon">
+    <h1 contenteditable="true">如何写出让捐赠人点赞的高分进展</h1>
+    <p class="subtitle" contenteditable="true">AI 进展评估指南 · 用真实的故事和透明的数据，让善意开花结果</p>
+  </div>
+</header>
+
+<!-- ============ BODY ============ -->
+<div class="container">
+
+  <!-- 1. 项目背景 -->
+  <div class="section" data-section="bg">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">项目进展的意义</span>
+    </div>
+    <div class="section-body" data-body>
+      <div contenteditable="true">
+        <p>项目进展是公益项目向捐赠人传递信任与温度最重要的窗口，也是驱动持续支持的基石。一篇用心、透明、有温度的进展，能让捐赠人真切感受到善款的落地与改变；反之，如果进展内容空洞或信息不实，则可能削弱信任，甚至影响机构的长期发展。</p>
+        <p>为了帮助大家更好地与捐赠人建立信任，我们推出了 <strong>"AI 进展辅助评分"</strong> 模型。我们希望通过对优质进展的识别与激励，鼓励每一位伙伴用真实的故事、清晰的账目，让捐赠人看见"善意如何开花结果"。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 评估原则（三块竖版） -->
+  <div class="section" data-section="principle">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">评估原则</span>
+    </div>
+    <div class="section-body" data-body>
+      <div class="principle-cards">
+        <div class="principle-card" contenteditable="true">
+          <div class="num">PRINCIPLE 01</div>
+          <h4><img src="1_小红花符号_原型_透明底.png" alt="" class="flower-icon">合规性</h4>
+          <p>至少每 3 个月发布 1 次进展，按时发布进展，确保项目合规。</p>
+        </div>
+        <div class="principle-card" contenteditable="true">
+          <div class="num">PRINCIPLE 02</div>
+          <h4><img src="1_小红花符号_原型_透明底.png" alt="" class="flower-icon">实质性</h4>
+          <p>进展须为真实的执行内容，既有"温度的故事"，也要有"理性的数据"——善款支出、受益人数、物资数量等。</p>
+        </div>
+        <div class="principle-card" contenteditable="true">
+          <div class="num">PRINCIPLE 03</div>
+          <h4><img src="1_小红花符号_原型_透明底.png" alt="" class="flower-icon">时效性</h4>
+          <p>能反映近期的执行情况，体现执行效率。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 评估逻辑 -->
+  <div class="section" data-section="logic">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">评估逻辑说明</span>
+    </div>
+    <div class="section-body" data-body>
+      <div contenteditable="true">
+        <p>为了鼓励项目围绕项目执行本身，为捐赠人提供真实、具体的执行反馈，<strong>项目公示、劝募通知、活动预告、节日祝福</strong>等类型将不计入 AI 评分。</p>
+        <p>剔除上述类型进展后，AI 评分围绕执行故事、善款使用类进展，从三个层面评估：</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h4 contenteditable="true">📄 单篇进展</h4>
+          <div contenteditable="true">
+            <p>重点评估<strong>执行故事类</strong>，考察单篇进展的内容质量。</p>
+            <ul>
+              <li>考察维度：时效性、项目相关性、执行细节、成果展示、内容丰富度</li>
+              <li>评分方式：AI 逐维度打分，生成单篇分数</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <h4 contenteditable="true">📊 项目整体评分</h4>
+          <div contenteditable="true">
+            <p>对项目近 6 个月的整体进展情况进行综合评估。</p>
+            <ul>
+              <li>考察维度：进展构成、内容质量、更新频次、善款披露完整性</li>
+              <li>评分方式：结合单篇分数与进展构成，生成整体评分（最新进展加权）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <h4 contenteditable="true">🏛️ 机构整体评分</h4>
+          <div contenteditable="true">
+            <p>基于机构下的所有项目取均分，划分好中差三档。</p>
+            <p style="margin-top:6px;">如果机构评分为"C"的项目占比 ≥ 30%，机构最高只能评"B"。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 单条进展评估维度 -->
+  <div class="section" data-section="single">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">单条进展评估维度</span>
+      <span class="tag tag-red" contenteditable="true">执行故事类</span>
+    </div>
+    <div class="section-body" data-body>
+      <div contenteditable="true">
+        <p>重点考察执行故事（长图文/短图文），鼓励项目用真诚、详实的语言讲述真实故事——遇到的困难、解决的策略、执行步骤、受助人的动人瞬间。</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th contenteditable="true">评估维度</th>
+              <th contenteditable="true">A（优秀）</th>
+              <th contenteditable="true">B（合格）</th>
+              <th contenteditable="true">C（待改进）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td contenteditable="true"><strong>时效性<br><span class="badge badge-a">20%</span></strong></td>
+              <td class="col-a" contenteditable="true">进展的执行内容为当月发生</td>
+              <td class="col-b" contenteditable="true">进展的执行内容时间发生范围为近一个季度内</td>
+              <td class="col-c" contenteditable="true">进展中执行内容时间发生范围超过一个季度</td>
+            </tr>
+            <tr>
+              <td contenteditable="true"><strong>项目相关性<br><span class="badge badge-a">20%</span></strong></td>
+              <td class="col-a" contenteditable="true">内容与项目目标、受助对象、帮扶方案高度相关</td>
+              <td class="col-b" contenteditable="true">基本回应受助对象和帮扶方案</td>
+              <td class="col-c" contenteditable="true">内容偏离项目方向</td>
+            </tr>
+            <tr>
+              <td contenteditable="true"><strong>执行细节<br><span class="badge badge-a">20%</span></strong></td>
+              <td class="col-a" contenteditable="true">充分描述执行细节：困难与应对、执行步骤、现场情况等</td>
+              <td class="col-b" contenteditable="true">有简单的时间、地点、受助对象要素描述，但缺乏细节</td>
+              <td class="col-c" contenteditable="true">只有笼统描述或"项目进展顺利"；无图片</td>
+            </tr>
+            <tr>
+              <td contenteditable="true"><strong>成果展示<br><span class="badge badge-a">20%</span></strong></td>
+              <td class="col-a" contenteditable="true">有明确量化数据，能说明成果带来的具体改变或影响</td>
+              <td class="col-b" contenteditable="true">能提供一定的结果数据</td>
+              <td class="col-c" contenteditable="true">无量化数据或仅感谢不汇报；数据前后矛盾</td>
+            </tr>
+            <tr>
+              <td contenteditable="true"><strong>内容丰富度<br><span class="badge badge-a">20%</span></strong></td>
+              <td class="col-a" contenteditable="true">图文并茂，多张图片/视频；文笔生动，能引发情感共鸣</td>
+              <td class="col-b" contenteditable="true">能结合图文清晰呈现执行过程，语言朴实</td>
+              <td class="col-c" contenteditable="true">寥寥数语无图片；文案过度夸张影响可信度；内容雷同</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 项目进展评估维度 -->
+  <div class="section" data-section="project">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">项目进展评估维度</span>
+      <span class="tag tag-blue" contenteditable="true">整体评估</span>
+    </div>
+    <div class="section-body" data-body>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th contenteditable="true">评估维度</th>
+              <th contenteditable="true">A（优秀）</th>
+              <th contenteditable="true">B（合格）</th>
+              <th contenteditable="true">C（待改进）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td contenteditable="true"><strong>进展构成<br><span class="badge badge-a">30%</span></strong></td>
+              <td class="col-a" contenteditable="true">执行故事类+善款公示等执行相关进展占比 ≥ 80%；涵盖筹备、执行、反馈全流程</td>
+              <td class="col-b" contenteditable="true">执行相关进展占比 50%~80%，构成略显单一</td>
+              <td class="col-c" contenteditable="true">无效进展占比 > 50%（宣传/劝募/祝福为主）或几乎全是简短财务数字</td>
+            </tr>
+            <tr>
+              <td contenteditable="true"><strong>内容质量<br><span class="badge badge-a">30%</span></strong></td>
+              <td class="col-a" contenteditable="true">深入描述"如何做、困难、解决、受益人反馈/改变"；图文质量高</td>
+              <td class="col-b" contenteditable="true">内容停留在表面记录，缺少过程细节和深层影响；图片较少</td>
+              <td class="col-c" contenteditable="true">所有进展都是口号式描述，无实质内容；图片缺失或网络配图</td>
+            </tr>
+            <tr>
+              <td contenteditable="true"><strong>更新频率<br><span class="badge badge-a">20%</span></strong></td>
+              <td class="col-a" contenteditable="true">每月均有进展发布</td>
+              <td class="col-b" contenteditable="true">每 3 个月能发布 1 次</td>
+              <td class="col-c" contenteditable="true">做不到每 3 个月 1 次</td>
+            </tr>
+            <tr>
+              <td contenteditable="true"><strong>善款透明度<br><span class="badge badge-a">20%</span></strong></td>
+              <td class="col-a" contenteditable="true">每季度至少 1 次善款披露，含收支明细+凭证；善款使用与执行可对应</td>
+              <td class="col-b" contenteditable="true">每半年至少 1 次善款披露，有基本收支但明细不足</td>
+              <td class="col-c" contenteditable="true">超过半年无善款披露；仅有数字罗列无明细</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 进展质量提升指引（合并：高分秘籍 + 踩雷清单 + 自查建议，纵向排列） -->
+  <div class="section" data-section="guide-all">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">进展质量提升指引</span>
+    </div>
+    <div class="section-body" data-body>
+      <div class="guide-block">
+
+        <!-- 高分秘籍 -->
+        <div class="guide-col">
+          <div class="guide-head guide-head-green">
+            <img src="1_小红花符号_原型_透明底.png" alt="" class="flower"> 高分秘籍清单
+            <span class="tag tag-green" contenteditable="true" style="margin-left:8px">做到就能拿高分</span>
+          </div>
+          <ul class="checklist" contenteditable="true">
+            <li><strong>频率达标：</strong>每月至少发布 1 条进展，形成稳定节奏。</li>
+            <li><strong>内容有料：</strong>每条进展包含执行故事（温度）+ 量化数据（理性）+ 善款说明（信任）。</li>
+            <li><strong>图文并茂：</strong>至少配 2-3 张执行现场照片，有视频更佳。</li>
+            <li><strong>善款透明：</strong>每季度至少 1 次善款使用专项披露，附凭证更佳。</li>
+            <li><strong>持续更新：</strong>近 6 个月持续有进展，没有超过 3 个月的空窗期。</li>
+            <li><strong>真诚表达：</strong>用真实故事打动捐赠人，不夸大、不套模板。</li>
+          </ul>
+          <div class="highlight highlight-green" style="margin-top:12px">
+            <h4 contenteditable="true">🏆 高分进展项目画像</h4>
+            <p contenteditable="true">每月稳定发布进展，内容兼具执行故事 + 量化数据 + 善款披露，图文并茂。</p>
+          </div>
+        </div>
+
+        <!-- 踩雷清单 -->
+        <div class="guide-col">
+          <div class="guide-head guide-head-red">
+            <span style="font-size:18px;font-weight:700;color:var(--red);margin-right:6px;">✘</span> 踩雷清单
+            <span class="tag tag-orange" contenteditable="true" style="margin-left:8px">这些行为会被扣分</span>
+          </div>
+          <ul class="badlist" contenteditable="true">
+            <li><strong>长期沉默：</strong>超过 3 个月不发进展，或一年只发 1-2 次。</li>
+            <li><strong>内容无效：</strong>项目公示、劝募通知、活动预告、节日祝福——这些不计入评估。</li>
+            <li><strong>空话套话：</strong>只有感谢没有实质内容。</li>
+            <li><strong>无图无据：</strong>纯文字且无数据、无图片。</li>
+            <li><strong>发错项目：</strong>把 A 项目的进展发布到 B 项目下。</li>
+            <li><strong>数据矛盾：</strong>前后进展中的数据不一致，且无合理解释。</li>
+            <li><strong>文案雷同：</strong>每期进展内容高度相似。</li>
+            <li><strong>过度夸张：</strong>对执行成果的描述过于夸大。</li>
+          </ul>
+          <div class="highlight highlight-red" style="margin-top:12px">
+            <h4 contenteditable="true">⚠️ 低分进展项目画像</h4>
+            <p contenteditable="true">间隔 3 个月以上才发 1 次，内容仅有感谢/通知/劝捐，缺少执行细节和善款说明。</p>
+          </div>
+        </div>
+
+        <!-- 自查建议 -->
+        <div class="guide-col">
+          <div class="guide-head guide-head-blue">
+            <span style="font-size:18px;font-weight:700;color:var(--blue);margin-right:6px;">?</span> 建议机构定期自查
+          </div>
+          <div class="self-check" contenteditable="true">
+            <div class="check-item">
+              <div class="check-q">更新频次达标了吗？</div>
+              <div class="check-a">至少每 3 个月 1 次，最好每月 1 次。上次进展是什么时候？</div>
+            </div>
+            <div class="check-item">
+              <div class="check-q">近半年的进展与项目执行密切相关吗？</div>
+              <div class="check-a">是否有充分的执行过程描述和现场图片？</div>
+            </div>
+            <div class="check-item">
+              <div class="check-q">内容是否体现了执行细节和善款去向？</div>
+              <div class="check-a">至少每 3 个月披露一次善款情况，执行过程详实、语言真诚，不浮夸。</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 奖励机制 -->
+  <div class="section" data-section="reward">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">高分机构奖励机制</span>
+    </div>
+    <div class="section-body" data-body>
+      <div contenteditable="true">
+        <p>我们鼓励每一位伙伴用心写好进展，让捐赠人看到善意的力量。对于持续获得高分的机构，我们将提供以下激励：</p>
+        <ul>
+          <li><strong>流量倾斜：</strong>在小红花来信中按照 2-4 周进行精选进展推荐。</li>
+          <li><strong>行业助力计划机构培育：</strong>激励中进行加分。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. 基础指引 -->
+  <div class="section" data-section="guide">
+    <div class="section-title section-header" data-toggle>
+      <img src="1_小红花符号_原型_透明底.png" alt="" class="flower">
+      <span contenteditable="true">基础指引</span>
+    </div>
+    <div class="section-body" data-body>
+      <div class="cards">
+        <div class="card">
+          <h4 contenteditable="true">进展功能如何使用</h4>
+          <div contenteditable="true">
+            <p>了解机构可以发哪些形式的进展，以及如何操作发布。</p>
+          </div>
+        </div>
+        <div class="card">
+          <h4 contenteditable="true">进展内容思路与 badcase</h4>
+          <div contenteditable="true">
+            <p>进展可以写什么？什么样的内容会被判定为低质量？参考优秀案例与反面教材。</p>
+          </div>
+        </div>
+        <div class="card">
+          <h4 contenteditable="true">进展产品介绍</h4>
+          <div contenteditable="true">
+            <p>捐赠人都可以在哪里看到进展？了解进展的展示渠道与用户触达方式。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<div class="footer">
+  <img src="1_小红花符号_原型_透明底.png" alt="" class="flower-sm">
+  <span contenteditable="true">腾讯公益 · AI 进展评估指南</span>
+  <img src="1_小红花符号_原型_透明底.png" alt="" class="flower-sm">
+  <div class="edit-hint" contenteditable="false"></div>
+</div>
+
+</body>
+</html>
+<script>
+(function() {
+  // ========== 1. 清除旧版本可能残留的错误缓存 ==========
+  try {
+    var oldKey = 'ai_progress_guide_edits';
+    var oldData = JSON.parse(localStorage.getItem(oldKey) || '{}');
+    // 如果旧数据使用的是 "bg_0" 格式的 key（旧版），清除重建
+    var keys = Object.keys(oldData);
+    if (keys.length > 0 && !keys[0].startsWith('ce_')) {
+      localStorage.removeItem(oldKey);
+    }
+    // 清除旧版独立板块的 collapse key
+    ['good','bad','check'].forEach(function(k) {
+      localStorage.removeItem('ai_progress_collapse_' + k);
+    });
+  } catch(e) {}
+
+  // ========== 2. 为每个可编辑元素分配稳定 ID ==========
+  const STORAGE_KEY = 'ai_progress_guide_edits';
+  const COLLAPSE_KEY = 'ai_progress_collapse';
+
+  function assignIds() {
+    let idx = 0;
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      if (!el.getAttribute('data-cid')) {
+        el.setAttribute('data-cid', 'ce_' + (idx++));
+      }
+    });
+  }
+
+  // ========== 2. 保存编辑内容到 localStorage ==========
+  function saveEdits() {
+    const data = {};
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      const cid = el.getAttribute('data-cid');
+      if (cid) data[cid] = el.innerHTML;
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+  }
+
+  // ========== 3. 从 localStorage 恢复编辑内容 ==========
+  function restoreEdits() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+        const cid = el.getAttribute('data-cid');
+        if (cid && data[cid] !== undefined) {
+          el.innerHTML = data[cid];
+        }
+      });
+    } catch(e) {}
+  }
+
+  // ========== 4. 监听编辑变化 ==========
+  assignIds();
+  restoreEdits();
+
+  // 显示保存状态提示
+  var saveToast = document.createElement('div');
+  saveToast.id = 'save-toast';
+  saveToast.textContent = '已自动保存';
+  document.body.appendChild(saveToast);
+
+  var saveTimer = null;
+  function showSaveTip() {
+    saveToast.classList.add('show');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){ saveToast.classList.remove('show'); }, 1500);
+  }
+
+  document.addEventListener('input', function(e) {
+    if (e.target.getAttribute('contenteditable') === 'true') {
+      saveEdits();
+      showSaveTip();
+    }
+  });
+
+  // ========== 5. 板块折叠/展开 ==========
+  function initCollapse() {
+    document.querySelectorAll('[data-toggle]').forEach(function(header) {
+      const section = header.closest('[data-section]');
+      const body = section ? section.querySelector('[data-body]') : null;
+      if (!body) return;
+
+      const secKey = section.getAttribute('data-section');
+
+      // 恢复折叠状态
+      try {
+        const collapsed = localStorage.getItem(COLLAPSE_KEY + '_' + secKey) === 'true';
+        if (collapsed) {
+          header.classList.add('collapsed');
+          body.classList.add('collapsed');
+        }
+      } catch(e) {}
+
+      header.addEventListener('click', function(e) {
+        if (e.target.getAttribute('contenteditable') === 'true') return;
+        const isCollapsed = body.classList.contains('collapsed');
+        header.classList.toggle('collapsed', !isCollapsed);
+        body.classList.toggle('collapsed', !isCollapsed);
+        try { localStorage.setItem(COLLAPSE_KEY + '_' + secKey, !isCollapsed); } catch(e) {}
+      });
+    });
+  }
+  initCollapse();
+})();
+</script>
