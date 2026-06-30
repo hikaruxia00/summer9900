@@ -878,5 +878,15 @@
       body.classList.toggle('collapsed', !isCollapsed);
     });
   });
+
+  // 让 contenteditable 内的链接可点击
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a');
+    if (link && link.getAttribute('href')) {
+      e.stopPropagation();
+      e.preventDefault();
+      window.open(link.getAttribute('href'), '_blank');
+    }
+  });
 })();
 </script>
