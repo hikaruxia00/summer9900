@@ -226,6 +226,7 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
+    table-layout: fixed;
   }
   thead th {
     background: var(--red);
@@ -235,6 +236,10 @@
     text-align: left;
     white-space: nowrap;
   }
+  thead th:nth-child(1) { width: 16%; }
+  thead th:nth-child(2) { width: 28%; }
+  thead th:nth-child(3) { width: 28%; }
+  thead th:nth-child(4) { width: 28%; }
   thead th:not(:last-child) {
     border-right: 1px solid rgba(255,255,255,.2);
   }
@@ -242,6 +247,10 @@
     padding: 12px 14px;
     border-bottom: 1px solid var(--gray-200);
     vertical-align: top;
+  }
+  tbody td:first-child {
+    font-weight: 600;
+    color: var(--gray-800);
   }
   tbody tr:last-child td { border-bottom: none; }
   tbody tr:hover { background: var(--gray-100); }
@@ -608,31 +617,31 @@
           </thead>
           <tbody>
             <tr>
-              <td contenteditable="true"><strong>时效性<br><span class="badge badge-a">20%</span></strong></td>
+              <td contenteditable="true">时效性<br><span class="badge badge-a">20%</span></td>
               <td class="col-a" contenteditable="true">进展的执行内容为当月发生</td>
               <td class="col-b" contenteditable="true">进展的执行内容时间发生范围为近一个季度内</td>
               <td class="col-c" contenteditable="true">进展中执行内容时间发生范围超过一个季度</td>
             </tr>
             <tr>
-              <td contenteditable="true"><strong>项目相关性<br><span class="badge badge-a">20%</span></strong></td>
+              <td contenteditable="true">项目相关性<br><span class="badge badge-a">20%</span></td>
               <td class="col-a" contenteditable="true">内容与项目目标、受助对象、帮扶方案高度相关</td>
               <td class="col-b" contenteditable="true">基本回应受助对象和帮扶方案</td>
               <td class="col-c" contenteditable="true">内容偏离项目方向</td>
             </tr>
             <tr>
-              <td contenteditable="true"><strong>执行细节<br><span class="badge badge-a">20%</span></strong></td>
+              <td contenteditable="true">执行细节<br><span class="badge badge-a">20%</span></td>
               <td class="col-a" contenteditable="true">充分描述执行细节：困难与应对、执行步骤、现场情况等</td>
               <td class="col-b" contenteditable="true">有简单的时间、地点、受助对象要素描述，但缺乏细节</td>
               <td class="col-c" contenteditable="true">只有笼统描述或"项目进展顺利"；无图片</td>
             </tr>
             <tr>
-              <td contenteditable="true"><strong>成果展示<br><span class="badge badge-a">20%</span></strong></td>
+              <td contenteditable="true">成果展示<br><span class="badge badge-a">20%</span></td>
               <td class="col-a" contenteditable="true">有明确量化数据，能说明成果带来的具体改变或影响</td>
               <td class="col-b" contenteditable="true">能提供一定的结果数据</td>
               <td class="col-c" contenteditable="true">无量化数据或仅感谢不汇报；数据前后矛盾</td>
             </tr>
             <tr>
-              <td contenteditable="true"><strong>内容丰富度<br><span class="badge badge-a">20%</span></strong></td>
+              <td contenteditable="true">内容丰富度<br><span class="badge badge-a">20%</span></td>
               <td class="col-a" contenteditable="true">图文并茂，多张图片/视频；文笔生动，能引发情感共鸣</td>
               <td class="col-b" contenteditable="true">能结合图文清晰呈现执行过程，语言朴实</td>
               <td class="col-c" contenteditable="true">寥寥数语无图片；文案过度夸张影响可信度；内容雷同</td>
@@ -663,25 +672,25 @@
           </thead>
           <tbody>
             <tr>
-              <td contenteditable="true"><strong>进展构成<br><span class="badge badge-a">30%</span></strong></td>
+              <td contenteditable="true">进展构成<br><span class="badge badge-a">30%</span></td>
               <td class="col-a" contenteditable="true">执行故事类+善款公示等执行相关进展占比 ≥ 80%；涵盖筹备、执行、反馈全流程</td>
               <td class="col-b" contenteditable="true">执行相关进展占比 50%~80%，构成略显单一</td>
               <td class="col-c" contenteditable="true">无效进展占比 > 50%（宣传/劝募/祝福为主）或几乎全是简短财务数字</td>
             </tr>
             <tr>
-              <td contenteditable="true"><strong>内容质量<br><span class="badge badge-a">30%</span></strong></td>
+              <td contenteditable="true">内容质量<br><span class="badge badge-a">30%</span></td>
               <td class="col-a" contenteditable="true">深入描述"如何做、困难、解决、受益人反馈/改变"；图文质量高</td>
               <td class="col-b" contenteditable="true">内容停留在表面记录，缺少过程细节和深层影响；图片较少</td>
               <td class="col-c" contenteditable="true">所有进展都是口号式描述，无实质内容；图片缺失或网络配图</td>
             </tr>
             <tr>
-              <td contenteditable="true"><strong>更新频率<br><span class="badge badge-a">20%</span></strong></td>
+              <td contenteditable="true">更新频率<br><span class="badge badge-a">20%</span></td>
               <td class="col-a" contenteditable="true">每月均有进展发布</td>
               <td class="col-b" contenteditable="true">每 3 个月能发布 1 次</td>
               <td class="col-c" contenteditable="true">做不到每 3 个月 1 次</td>
             </tr>
             <tr>
-              <td contenteditable="true"><strong>善款透明度<br><span class="badge badge-a">20%</span></strong></td>
+              <td contenteditable="true">善款透明度<br><span class="badge badge-a">20%</span></td>
               <td class="col-a" contenteditable="true">每季度至少 1 次善款披露，含收支明细+凭证；善款使用与执行可对应</td>
               <td class="col-b" contenteditable="true">每半年至少 1 次善款披露，有基本收支但明细不足</td>
               <td class="col-c" contenteditable="true">超过半年无善款披露；仅有数字罗列无明细</td>
